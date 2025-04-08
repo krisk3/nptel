@@ -15,7 +15,7 @@ services:
       sh -c "python manage.py wait_for_db &&
              python manage.py makemigrations &&
              python manage.py migrate &&
-             python manage.py collectstatic --noinput &&
+             #python manage.py collectstatic --noinput &&
              python manage.py runserver 0.0.0.0:8000"
     environment:
       - SECRET_KEY=django-insecure-z6(gj(g4!f(@5bejr_ut=1cq^)o7)ah=g%@$y*ro)j51$!k-x6

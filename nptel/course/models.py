@@ -13,8 +13,8 @@ class Course(models.Model):
     ]
 
     course_name = models.CharField(max_length=200)
-    course_code = models.CharField(max_length=20, unique=True)
-    description = models.TextField()
+    course_code = models.CharField(max_length=20, unique=True, blank=True, null=True)
+    description = models.TextField(blank=True, null=True)   
     duration = models.IntegerField(help_text="Duration in days")
     difficulty_level = models.PositiveSmallIntegerField(choices=DIFFICULTY_CHOICES)
     instructor = models.ForeignKey(FacultyProfile, on_delete=models.CASCADE, related_name='courses')
@@ -37,8 +37,7 @@ class Registration(models.Model):
     course = models.ForeignKey(Course, on_delete=models.CASCADE, related_name='registrations')
     status = models.CharField(max_length=20, choices=STATUS_CHOICES, default='pending')
     registration_date = models.DateTimeField(auto_now_add=True)
-    completion_date = models.DateTimeField(null=True, blank=True)
-    grade = models.CharField(max_length=2, blank=True, null=True)
+    grade = models.CharField(max_length=2, blank=True, null=True, default="")
 
     class Meta:
         unique_together = ['student', 'course']
