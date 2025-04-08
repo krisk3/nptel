@@ -3,6 +3,8 @@ from django.db.models.signals import pre_save, post_save
 from django.dispatch import receiver
 from .models import StudentProfile, FacultyProfile, User
 
+
+# Signals
 @receiver(post_save, sender=User)
 def create_profile(sender, instance, created, **kwargs):
     """
@@ -18,7 +20,7 @@ def create_profile(sender, instance, created, **kwargs):
 @receiver(pre_save, sender=StudentProfile)
 def assign_student_id(sender, instance, **kwargs):
     """
-    Assign a unique student_id before saving, if not already assigned.
+    Assign a student_id to StudentProfile object.
     """
     if not instance.student_id and instance.user_id:
         random_suffix = random.randint(1000, 9999)
@@ -28,7 +30,7 @@ def assign_student_id(sender, instance, **kwargs):
 @receiver(pre_save, sender=FacultyProfile)
 def assign_faculty_id(sender, instance, **kwargs):
     """
-    Assign a unique faculty_id before saving, if not already assigned.
+    Assign a faculty_id to FacultyProfile object.
     """
     if not instance.faculty_id and instance.user_id:
         random_suffix = random.randint(1000, 9999)

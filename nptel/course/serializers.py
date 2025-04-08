@@ -2,6 +2,8 @@ from rest_framework import serializers
 from django.contrib.auth import authenticate
 from .models import Course, Registration
 
+
+# Serializers
 class CourseCreateSerializer(serializers.ModelSerializer):
     instructor_name = serializers.SerializerMethodField()
     
@@ -53,9 +55,9 @@ class CourseDetailSerializer(serializers.ModelSerializer):
         return obj.instructor.get_full_name()
     
 class RegistrationSerializer(serializers.ModelSerializer):
-    student = serializers.SerializerMethodField()  # Add a method field for student details
-    course = serializers.SerializerMethodField()  # Add a method field for course details
-    
+    student = serializers.SerializerMethodField()  
+    course = serializers.SerializerMethodField()  
+
     class Meta:
         model = Registration
         fields = ['id', 'student', 'course', 'status', 'registration_date', 'grade']

@@ -8,7 +8,7 @@ from django.contrib.auth.models import (
     PermissionsMixin,
 )
 
-
+#Models
 class UserManager(BaseUserManager):
     """Manager for users"""
 
@@ -58,12 +58,10 @@ class User(AbstractBaseUser, PermissionsMixin):
         verbose_name_plural = "Users"
 
     def is_student(self):
-        return self.user_type == 'student'
+        return self.account_type == 'student'
     
     def is_faculty(self):
-        return self.user_type == 'faculty'
-
-    
+        return self.account_type == 'faculty'
 
     def __str__(self):
         return self.username
@@ -127,7 +125,6 @@ class FacultyProfile(models.Model):
             return self.first_name
         else:
             return f"No name provided"
-
 
     def __str__(self):
         if self.first_name and self.last_name and self.department: 

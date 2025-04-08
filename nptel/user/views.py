@@ -17,6 +17,9 @@ class FacultyLoginView(APIView):
         description="Authenticates faculty and returns JWT tokens."
     )
     def post(self, request):
+        """
+        Authenticates the faculty user and returns JWT tokens for access and refresh.
+        """
         serializer = FacultyLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
@@ -25,8 +28,8 @@ class FacultyLoginView(APIView):
             
             return Response({
                 'token': {
-                    'refresh': str(refresh),
                     'access': str(refresh.access_token),
+                    'refresh': str(refresh),
                 },
                 'user': {
                     'id': user.id,
@@ -45,6 +48,9 @@ class StudentLoginView(APIView):
         description="Authenticates student and returns JWT tokens."
     )
     def post(self, request):
+        """
+        Authenticates the student user and returns JWT tokens for access and refresh.
+        """
         serializer = StudentLoginSerializer(data=request.data)
         if serializer.is_valid():
             user = serializer.validated_data['user']
@@ -53,8 +59,8 @@ class StudentLoginView(APIView):
             
             return Response({
                 'token': {
-                    'refresh': str(refresh),
                     'access': str(refresh.access_token),
+                    'refresh': str(refresh),
                 },
                 'user': {
                     'id': user.id,
@@ -74,11 +80,13 @@ class CreateStudentView(APIView):
         description="Creates a new student account with user and profile."
     )
     def post(self, request):
+        """
+        Creates a new student account with user and profile.
+        """
         serializer = CreateStudentSerializer(data=request.data)
         if serializer.is_valid():
             try:
                 student = serializer.save()
-                # Generate tokens for immediate login
                 refresh = RefreshToken.for_user(student.user)
                 
                 return Response({
@@ -107,11 +115,13 @@ class CreateFacultyView(APIView):
         description="Creates a new faculty account with user and profile."
     )
     def post(self, request):
+        """
+        Creates a new faculty account with user and profile.
+        """
         serializer = CreateFacultySerializer(data=request.data)
         if serializer.is_valid():
             try:
                 faculty = serializer.save()
-                # Generate tokens for immediate login
                 refresh = RefreshToken.for_user(faculty.user)
                 
                 return Response({

@@ -4,8 +4,11 @@ from django.core.exceptions import ValidationError
 
 from user.models import FacultyProfile, StudentProfile
 
-# Create your models here.
+# Models
 class Course(models.Model):
+    """
+    Course model to represent a course in the system
+    """
     DIFFICULTY_CHOICES = [
         (1, 'Beginner'),
         (2, 'Intermediate'),
@@ -26,6 +29,9 @@ class Course(models.Model):
         return f"{self.course_name} ({self.course_code})"
 
 class Registration(models.Model):
+    """
+    Registration model for students to register for courses
+    """
     STATUS_CHOICES = [
         ('pending', 'Pending'),
         ('approved', 'Approved'),

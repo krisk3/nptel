@@ -37,7 +37,6 @@ class StudentLoginSerializer(serializers.Serializer):
 
 
 class CreateStudentSerializer(serializers.ModelSerializer):
-    # User fields
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
@@ -59,11 +58,9 @@ class CreateStudentSerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        # Extract user-related data
         username = validated_data.pop('username')
         password = validated_data.pop('password')
 
-        # Create user
         user = User.objects.create_user(
             username=username,
             password=password,
@@ -79,9 +76,8 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         return student_profile
 
     def to_representation(self, instance):
-        # Access related user fields correctly
         return {
-            "username": instance.user.username,  # Access username from the related User model
+            "username": instance.user.username,  
             "first_name": instance.first_name,
             "last_name": instance.last_name,
             "student_id": instance.student_id,
@@ -92,7 +88,6 @@ class CreateStudentSerializer(serializers.ModelSerializer):
         }    
 
 class CreateFacultySerializer(serializers.ModelSerializer):
-    # User fields
     username = serializers.CharField(max_length=255)
     password = serializers.CharField(write_only=True, style={'input_type': 'password'})
 
@@ -113,11 +108,9 @@ class CreateFacultySerializer(serializers.ModelSerializer):
 
     @transaction.atomic
     def create(self, validated_data):
-        # Extract user-related data
         username = validated_data.pop('username')
         password = validated_data.pop('password')
 
-        # Create user
         user = User.objects.create_user(
             username=username,
             password=password,
